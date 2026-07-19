@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1200px;height:630px;background:#011627;color:#EBEBD3;
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC",sans-serif;
+  display:flex;flex-direction:column;justify-content:space-between;padding:72px 84px 60px;position:relative;overflow:hidden}
+.grid{position:absolute;inset:0;background-image:linear-gradient(#10293D 1px,transparent 1px),linear-gradient(90deg,#10293D 1px,transparent 1px);background-size:48px 48px;opacity:.35}
+.top,.bottom,.mid{position:relative}
+.prompt{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:26px;color:#A9A99A;letter-spacing:.04em}
+.prompt .d{color:#5CC99A;font-weight:700}
+h1{font-size:76px;font-weight:800;line-height:1.28;letter-spacing:.01em;margin-top:20px}
+h1 .cur{display:inline-block;width:.5em;height:.95em;background:#5CC99A;vertical-align:text-bottom;margin-left:.1em}
+.sub{margin-top:26px;font-size:31px;color:#A9A99A;line-height:1.5}
+.sub b{color:#FF715B;font-weight:700}
+.bottom{display:flex;justify-content:space-between;align-items:baseline;font-family:ui-monospace,"SF Mono",Menlo,monospace}
+.url{font-size:24px;color:#5CC99A}
+.tag{font-size:22px;color:#7E93A3}
+</style>
+</head>
+<body>
+<div class="grid"></div>
+<div class="top">
+  <p class="prompt"><span class="d">$</span> agend attach --team all ⏎</p>
+  <h1>我養了一群 AI<br>當開發團隊<span class="cur"></span></h1>
+</div>
+<div class="mid">
+  <p class="sub">兩個月的實驗心得報告——模型大洗牌、retro 自主閉環，<br><b>60%+ 的 token 花在管 AI 怎麼工作</b>，而非開發本身。</p>
+</div>
+<div class="bottom">
+  <span class="url">cheerc.github.io/agend-team-devlog</span>
+  <span class="tag">2026/07 · devlog</span>
+</div>
+</body>
+</html>

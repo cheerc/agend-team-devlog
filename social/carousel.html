@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#011627;--surface:#0B2438;--line:#1D3B54;
+  --beige:#EBEBD3;--beige-dim:#A9A99A;
+  --green:#5CC99A;--green-mark:#2D936C;--green-deep:#1E6B4E;
+  --coral:#FF715B;--red:#C1292E;
+  --beige-line:#D6D6BC;--light-muted:#3F5468;
+  --mono:ui-monospace,"SF Mono",Menlo,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC",sans-serif;
+}
+body{width:1080px;font-family:var(--sans)}
+.card{width:1080px;height:1350px;position:relative;overflow:hidden;background:var(--ink);color:var(--beige);
+  display:flex;flex-direction:column;padding:96px 88px;justify-content:space-between}
+.card .grid{position:absolute;inset:0;background-image:linear-gradient(#10293D 1px,transparent 1px),linear-gradient(90deg,#10293D 1px,transparent 1px);background-size:54px 54px;opacity:.4}
+.card>*{position:relative}
+.prompt{font-family:var(--mono);font-size:30px;color:var(--beige-dim);letter-spacing:.04em}
+.prompt .d{color:var(--green);font-weight:700}
+.pagenum{font-family:var(--mono);font-size:26px;color:var(--light-muted)}
+.card.dark .pagenum{color:#54708A}
+.foot{display:flex;justify-content:space-between;align-items:baseline;font-family:var(--mono)}
+.foot .u{font-size:28px;color:var(--green)}
+
+/* card 1 — cover */
+.c1 h1{font-size:118px;font-weight:800;line-height:1.3;letter-spacing:.01em;margin-top:28px}
+.c1 h1 .cur{display:inline-block;width:.5em;height:.95em;background:var(--green);vertical-align:text-bottom;margin-left:.1em}
+.c1 .sub{margin-top:44px;font-size:44px;line-height:1.6;color:var(--beige-dim)}
+.c1 .sub b{color:var(--coral);font-weight:700}
+.c1 .hint{margin-top:40px;font-family:var(--mono);font-size:30px;color:var(--green)}
+
+/* card 2 — chain */
+.head{font-family:var(--mono);font-size:34px;color:var(--green);letter-spacing:.06em}
+.head::before{content:"§ "}
+.h2{font-size:64px;font-weight:800;margin-top:16px;line-height:1.35}
+.chain{display:flex;flex-direction:column;align-items:center;gap:18px;margin-top:40px}
+.cbox{background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:22px 44px;text-align:center;min-width:520px}
+.cbox .who{font-family:var(--mono);font-weight:700;font-size:40px}
+.cbox .what{font-size:28px;color:var(--beige-dim);margin-top:4px;display:block}
+.cbox.me{border-color:var(--coral);border-style:dashed}
+.cbox.hub{border-color:var(--green-mark)}
+.carrow{font-family:var(--mono);color:var(--green);font-size:40px;line-height:1}
+.duo2{display:flex;gap:18px}
+.duo2 .cbox{min-width:0;flex:1;padding:22px 30px}
+.loopnote{margin-top:34px;font-family:var(--mono);font-size:28px;color:var(--coral);display:flex;align-items:center;gap:20px;width:100%}
+.loopnote::before,.loopnote::after{content:"";flex:1;border-top:2px dashed var(--coral);opacity:.6}
+
+/* card 2 compression */
+.c2 .h2{font-size:56px}
+.c2 .chain{gap:12px;margin-top:28px}
+.c2 .cbox{padding:15px 40px}
+.c2 .cbox .who{font-size:36px}
+.c2 .cbox .what{font-size:26px}
+.c2 .carrow{font-size:30px}
+.c2 .loopnote{margin-top:20px}
+
+/* card 3 — timeline */
+.tpane{background:var(--surface);border:2px solid var(--line);border-radius:14px;margin-top:44px;overflow:hidden}
+.tbar{display:flex;gap:12px;align-items:center;padding:18px 28px;border-bottom:2px solid var(--line)}
+.tbar i{width:16px;height:16px;border-radius:50%;background:var(--line);display:inline-block}
+.tbar i:first-child{background:var(--green-mark)}
+.tbar span{font-family:var(--mono);font-size:26px;color:var(--beige-dim);margin-left:8px}
+.tlog{padding:16px 36px 26px}
+.trow{display:flex;gap:26px;padding:22px 0;align-items:baseline}
+.trow+.trow{border-top:2px dashed var(--line)}
+.trow .n{color:var(--green);font-family:var(--mono);font-size:34px}
+.trow .e{font-family:var(--mono);font-size:33px;line-height:1.5}
+.trow .e em{font-style:normal;color:var(--coral)}
+.trow .e small{display:block;font-family:var(--sans);font-size:27px;color:var(--beige-dim);margin-top:2px}
+
+/* card 4 — 60% (beige) */
+.card.light{background:var(--beige);color:var(--ink)}
+.card.light .grid{background-image:linear-gradient(var(--beige-line) 1px,transparent 1px),linear-gradient(90deg,var(--beige-line) 1px,transparent 1px);opacity:.5}
+.card.light .prompt{color:var(--light-muted)}
+.card.light .prompt .d{color:var(--green-deep)}
+.c4 .big{font-size:340px;font-weight:800;line-height:1;color:var(--red);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.c4 .big small{font-size:.38em}
+.c4 .label{font-size:60px;font-weight:800;line-height:1.5;margin-top:36px;color:var(--ink)}
+.c4 .fine{font-family:var(--mono);font-size:28px;color:var(--light-muted);margin-top:28px}
+.card.light .foot .u{color:var(--green-deep)}
+.card.light .pagenum{color:var(--light-muted)}
+
+/* card 5 — link */
+.c5 .h2{font-size:76px}
+.c5 .list{margin-top:52px;display:flex;flex-direction:column;gap:34px}
+.c5 .item{display:flex;gap:24px;align-items:baseline;font-size:40px;line-height:1.55}
+.c5 .item .b{font-family:var(--mono);color:var(--green);flex:0 0 auto}
+.c5 .item small{display:block;font-size:30px;color:var(--beige-dim)}
+.c5 .cta{margin-top:56px;background:var(--surface);border:2px solid var(--green-mark);border-radius:14px;padding:40px 44px;font-family:var(--mono)}
+.c5 .cta .p{font-size:32px;color:var(--beige-dim)}
+.c5 .cta .p .d{color:var(--green);font-weight:700}
+.c5 .cta .u{display:block;font-size:34px;color:var(--green);margin-top:14px;font-weight:700}
+</style>
+</head>
+<body>
+
+<!-- card 1 · cover -->
+<div class="card dark c1">
+  <div class="grid"></div>
+  <div>
+    <p class="prompt"><span class="d">$</span> agend attach --team all ⏎</p>
+    <h1>我養了一群 AI<br>當開發團隊<span class="cur"></span></h1>
+  </div>
+  <div>
+    <p class="sub">兩個月的實驗心得報告——<br>模型大洗牌、retro 自主閉環，<br><b>讓 AI 使喚 AI 自己工作</b>。</p>
+    <p class="hint">→ 往右滑看重點</p>
+  </div>
+  <div class="foot"><span class="u">cheerc.github.io/agend-team-devlog</span><span class="pagenum">1/5</span></div>
+</div>
+
+<!-- card 2 · chain -->
+<div class="card dark c2">
+  <div class="grid"></div>
+  <div>
+    <p class="head">team</p>
+    <p class="h2">一次開發任務的流程鏈</p>
+  </div>
+  <div class="chain">
+    <div class="cbox me"><span class="who">我</span><span class="what">給方向、給邊界，等成果就好</span></div>
+    <span class="carrow">↓</span>
+    <div class="cbox hub"><span class="who">general</span><span class="what">審查・規劃・決策</span></div>
+    <span class="carrow">↓</span>
+    <div class="cbox"><span class="who">lead</span><span class="what">寫計畫、派工、守 SOP、把關合併</span></div>
+    <span class="carrow">↓</span>
+    <div class="cbox"><span class="who">impl</span><span class="what">看著計畫書埋頭苦幹</span></div>
+    <span class="carrow">⇄</span>
+    <div class="duo2">
+      <div class="cbox"><span class="who">reviewer</span><span class="what">第三者挑問題</span></div>
+      <div class="cbox"><span class="who">reviewer2</span><span class="what">第二道審核</span></div>
+    </div>
+    <p class="loopnote">↺ 審核通過 → 合併 → 一路回報到我</p>
+  </div>
+  <div class="foot"><span class="u">cheerc.github.io/agend-team-devlog</span><span class="pagenum">2/5</span></div>
+</div>
+
+<!-- card 3 · timeline -->
+<div class="card dark">
+  <div class="grid"></div>
+  <div>
+    <p class="head">models</p>
+    <p class="h2">一個多月的模型大爆炸</p>
+  </div>
+  <div class="tpane">
+    <div class="tbar"><i></i><i></i><i></i><span>git log --oneline models/</span></div>
+    <div class="tlog">
+      <div class="trow"><span class="n">*</span><div class="e">Opus 4.8 出現，令人驚艷</div></div>
+      <div class="trow"><span class="n">*</span><div class="e"><em>Fable 橫空出世</em>，震驚世界</div></div>
+      <div class="trow"><span class="n">*</span><div class="e">Fable 太強<em>被禁</em>→重出，能力大不如前</div></div>
+      <div class="trow"><span class="n">*</span><div class="e">GPT 5.6 出現，CP 值超高<small>Sol 超強超仔細；Luna 省 token 神器</small></div></div>
+      <div class="trow"><span class="n">*</span><div class="e">Grok 4.5 釋出：快、便宜又大碗<small>搭配細心 reviewer，又好又快</small></div></div>
+    </div>
+  </div>
+  <div class="foot"><span class="u">cheerc.github.io/agend-team-devlog</span><span class="pagenum">3/5</span></div>
+</div>
+
+<!-- card 4 · 60% (beige) -->
+<div class="card light c4">
+  <div class="grid"></div>
+  <p class="prompt"><span class="d">$</span> token usage --self-report</p>
+  <div>
+    <p class="big">60<small>%+</small></p>
+    <p class="label">的 token 花在「管 AI 怎麼工作」，<br>而不是開發本身。</p>
+    <p class="fine"># 自我評估，非實測數據——管人真的很花錢</p>
+  </div>
+  <div class="foot"><span class="u">cheerc.github.io/agend-team-devlog</span><span class="pagenum">4/5</span></div>
+</div>
+
+<!-- card 5 · link -->
+<div class="card dark c5">
+  <div class="grid"></div>
+  <div>
+    <p class="head">outro</p>
+    <p class="h2">完整心得都寫在這</p>
+    <div class="list">
+      <div class="item"><span class="b">01</span><div>兩個月模型大洗牌的完整記錄與手感評價</div></div>
+      <div class="item"><span class="b">02</span><div>team workflow 怎麼搭、retro 閉環怎麼轉</div></div>
+      <div class="item"><span class="b">03</span><div>工具鏈與省錢技巧<small>CLI Proxy API、sub-agent 換模型省 token</small></div></div>
+    </div>
+  </div>
+  <div>
+    <div class="cta">
+      <p class="p"><span class="d">$</span> open 完整圖文版</p>
+      <span class="u">cheerc.github.io/agend-team-devlog</span>
+    </div>
+  </div>
+  <div class="foot"><span class="u">2026/07 · devlog</span><span class="pagenum">5/5</span></div>
+</div>
+
+</body>
+</html>
